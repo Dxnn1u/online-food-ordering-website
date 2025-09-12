@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>web_prototype1</title>
+    </head>
+
+    <body>
+        <link rel="stylesheet" href="menu.css">
+        <!--<button onclick=show_total()>Total</button>
+        <button onclick=clear_cart()>Clear</button>-->
+
+        <nav class="menu-nav">
+            <a href='#Appetizers'>Appetizers</a>
+            <a href='#Cocktail'>Cocktail</a>
+            <a href='#Specials'>Specials</a>
+        </nav>
+
+        <a href="checkout.html">
+            <button id="checkout-button" class="button">Cart</button>
+            <!--讓這個按鈕保留與其他按鈕相同的樣式，但同時用id給予獨有的屬性-->
+        </a>
+
+        <section id="Appetizers">
+            <h2 id="h2_appetizers">Appetizers</h2>
+            <h3>Chill Cheese Fries</h3>
+            <div class="container">
+                <img class="img" src="Appetizer Pics/chill cheese fries.jpeg">
+                <div class="text-button-group">
+                    <span class="description">A hearty comfort classic, Chili Cheese Fries are golden, crispy fries smothered in rich, savory chili and melted cheese. Each bite delivers a satisfying combination of warmth, spice, and indulgence. Perfect for sharing or savoring alone, this dish is a bold choice for those who crave flavor-packed comfort.</span>
+                    <div class="price-button">
+                        <p class="price">12.99</p>
+                        <button onclick="addToCart('Chill Cheese Fries', 12.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Nachos</h3>
+            <div class="container">
+                <img class="img" src="Appetizer Pics/nachos.jpg">
+                <div class="text-button-group">
+                    <span class="description">A festive favorite, Nachos layer crisp tortilla chips with melted cheese, fresh toppings, and a hint of spice. Bursting with texture and color, each bite offers a playful mix of crunch and savory goodness. Ideal for gatherings or casual snacking, Nachos are a lively choice for those who enjoy bold, shareable flavors.</span>
+                    <div class="price-button">
+                        <p class="price">10.99</p>
+                        <button onclick="addToCart('Nachos', 10.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <section id="Cocktail">
+            <h2>Cocktail</h2>
+            <h3>Negroni</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Negroni.png">
+                <div class="text-button-group">
+                    <span class="description">A timeless Italian classic, the Negroni is the perfect balance of bitter, sweet, and bold. Crafted with equal parts gin, vermouth, and Campari, it’s a cocktail that embodies sophistication and simplicity. Smooth yet complex, the Negroni is best enjoyed slowly—an elegant choice for those who appreciate refined taste.</span>
+                    <div class="price-button">
+                        <p class="price">5.99</p>
+                        <button onclick="addToCart('Negroni', 5.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+            
+            <h3>Margarita</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Margarita.png">
+                <div class="text-button-group">
+                    <span class="description">A vibrant Mexican classic, the Margarita blends premium tequila, fresh lime juice, and orange liqueur into a crisp, refreshing cocktail. Bright and zesty, it awakens the senses with each sip while maintaining elegant balance. The Margarita is best enjoyed slowly—an invigorating choice for those who appreciate a lively yet refined taste.</span>
+                    <div class="price-button">
+                        <p class="price">5.99</p>
+                        <button onclick="addToCart('Margarita', 5.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Long Island Iced Tea</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Long_Island_Tea.png">
+                <div class="text-button-group">
+                    <span class="description">A bold and spirited cocktail, the Long Island Iced Tea combines vodka, gin, rum, tequila, and triple sec with a hint of cola. Smooth yet complex, it reveals layers of citrus, sweetness, and subtle bitterness in every sip. The Long Island Iced Tea is perfect for adventurous palates seeking a refined, high-energy experience.</span>
+                    <div class="price-button">
+                        <p class="price">6.99</p>
+                        <button onclick="addToCart('Long Island Iced Tea', 6.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Mojito</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Mojito.png">
+                <div class="text-button-group">
+                    <span class="description">A refreshing Cuban classic, the Mojito combines crisp mint, zesty lime, and smooth white rum for a vibrant and invigorating cocktail. Lightly sweetened and topped with soda, it delivers a perfect balance of freshness and spirit. Ideal for warm days, the Mojito is a lively choice for those who enjoy bright, uplifting flavors.</span>
+                    <div class="price-button">
+                        <p class="price">5.49</p>
+                        <button onclick="addToCart('Mojito', 5.49)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Bloody Mary</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Bloody Mary.png">
+                <div class="text-button-group">
+                    <span class="description">A bold brunch favorite, the Bloody Mary is a savory cocktail that excites the palate with tomato juice, vodka, and a touch of spice. Garnished with celery or olives, it’s a drink that marries complexity with comfort. Robust and flavorful, the Bloody Mary is perfect for those who appreciate a cocktail with character and kick.</span>
+                    <div class="price-button">
+                        <p class="price">5.49</p>
+                        <button onclick="addToCart('Bloody Mary', 5.49)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Manhattan</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Manhattan.png">
+                <div class="text-button-group">
+                    <span class="description">A classic New York concoction, the Manhattan is a sophisticated blend of whiskey, sweet vermouth, and bitters. Rich and warming, it delivers smooth depth with a subtle sweetness. Timeless and elegant, the Manhattan is a refined choice for those who savor tradition and nuanced flavors.</span>
+                    <div class="price-button">
+                        <p class="price">6.49</p>
+                        <button onclick="addToCart('Manhattan', 6.49)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>Martini</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/Martini.png">
+                <div class="text-button-group">
+                    <span class="description">An iconic symbol of elegance, the Martini balances crisp gin and dry vermouth into a clean, refined cocktail. Often garnished with a twist of lemon or an olive, it embodies sophistication and precision. Smooth, minimalist, and confident, the Martini is a perfect choice for those who appreciate understated luxury.</span>
+                    <div class="price-button">
+                        <p class="price">6.49</p>
+                        <button onclick="addToCart('Martini', 6.49)">Add</button>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <section id="Specials">
+            <h2>Specials</h2>
+            <h3>Cocktail of the Day</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/mystery.jpg">
+                <div class="text-button-group">
+                    <span class="description">Freshly inspired each day, Bar 01’s Cocktail of the Day showcases creativity, balance, and seasonal flavors. Expertly mixed with premium spirits and thoughtful garnishes, it offers a unique twist for every visit. Smooth, intriguing, and full of character, this daily special invites guests to explore something new with every sip.</span>
+                    <div class="price-button">
+                        <p class="price">6.49</p>
+                        <button onclick="addToCart('Cocktail of the Day', 6.49)">Add</button>
+                    </div>
+                </div> 
+            </div>
+
+            <h3>House Shot</h3>
+            <div class="container">
+                <img class="img" src="Cocktail Pics/mystery.jpg">
+                <div class="text-button-group">
+                    <span class="description">A daring creation exclusive to Bar 01, the House Shot delivers a concentrated burst of flavor in a single, bold sip. Expertly crafted by our bartenders, it balances intensity and nuance, offering a thrilling taste experience. Perfect for adventurous spirits, the House Shot is a lively introduction to the artistry behind every drink at Bar 01.</span>
+                    <div class="price-button">
+                        <p class="price">2.99</p>
+                        <button onclick="addToCart('House Shot', 2.99)">Add</button>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <script src ="script_test2.js"> </script>
+    </body>
+</html>

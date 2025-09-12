@@ -1,0 +1,38 @@
+html,body{
+    height: 100vh;
+    margin: 0;
+}
+
+
+.button{
+    background-color: transparent;
+    color: black;
+    font-size: 30px;
+    font-weight: bolder;
+    text-decoration: none;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+.button:hover{
+    background-color: black;
+    color: aliceblue;
+}
+
+.title{
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 350px;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
