@@ -1,6 +1,6 @@
 function addToCart(productName, price){
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let existingProduct = cart.find(item => item.name === productName)
+    let cart = JSON.parse(localStorage.getItem("cart")) || []; //將Json轉換回可用data，並通通存在cart裡
+    let existingProduct = cart.find(item => item.name === productName) //這個existingProduct其實就是現在加入的product
     /*等價於function(item){
         return(item.name === productName)
     } */
@@ -12,28 +12,23 @@ function addToCart(productName, price){
         //可以類比成Python中的dict
     }
     localStorage.setItem("cart", JSON.stringify(cart))
-        //記得Json裡只能放字串，所以要用stringfy轉換   
+        //記得Json裡只能放字串，所以要用stringfy轉換，上面那步就是再存回去localStorage，並給他一個key叫做cart   
     renderCart()
 }   
 
-function renderCart(){
+function renderCart(){ //渲染preview
     let cart =JSON.parse(localStorage.getItem("cart")) || [];
     const cartList = document.getElementById('cart-list');
     const preview = document.getElementById('cart-preview');
 
-    //生成訂單
-    //let orderDiv = document.createElement("div");
-    //orderDiv.classList.add('order');
+    if (!cartList || !preview) return; //cartList只在checkout.html中存在，所以只能在checkout頁面執行
 
-    //渲染preview
-    if (!cartList || !preview) return;
-
-    preview.innerHTML = '';
-    cart.forEach(item => {
-        let li = document.createElement('li');
+    preview.innerHTML = ''; 
+    cart.forEach(item => { //forEach可以歷遍cart
+        let li = document.createElement('li'); //<li>這個標籤可以用來持續往下生成cart
 
         let nameSpan = document.createElement("span");
-        nameSpan.textContent = item.name;
+        nameSpan.textContent = item.name; //在li下面(根據html裡的設定)，先生成產品名稱
 
         //數量容器
         let qtyContainer = document.createElement("span");
@@ -44,12 +39,9 @@ function renderCart(){
         let plusBtn = document.createElement("button");
         plusBtn.textContent = "+";
 
-        qtyContainer.appendChild(minusBtn);
+        qtyContainer.appendChild(minusBtn); //這邊把數量及調整的按鈕全部包成一個set比較好排版
         qtyContainer.appendChild(qtyDisplay);
         qtyContainer.appendChild(plusBtn);
-        
-        /*let quantitySpan = document.createElement("span");
-        quantitySpan.textContent = `x${item.quantity}`;*/
 
         let priceSpan = document.createElement("span");
         priceSpan.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
@@ -57,7 +49,7 @@ function renderCart(){
         li.appendChild(nameSpan);
         li.appendChild(qtyContainer);
         li.appendChild(priceSpan);
-        preview.appendChild(li);
+        preview.appendChild(li); //把上面的名稱、數量set、價格都加進li裡（這樣算一種商品的資訊），再把li加進preview中
 
         //按鈕事件
         minusBtn.addEventListener('click', ()=>{
@@ -78,10 +70,11 @@ function renderCart(){
             renderCart();
         })  
     })
-    updateTotal();
+    updateTotal(); //切記每渲染一次購物車就要重新算一次總額
 }
 
-function renderSubmittedOrders(){
+function renderSubmittedOrders(){ /*這邊跟上面的renderCart類似，主要差別在於已送出的訂單設定上無法再進行數量的調整，
+    所以不會有數量調控的set加運作程式碼，嚴格來說其實可以再用function把中間部分內容帶換掉但我覺得會太繁瑣效益也普通就沒做了*/
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
     const cartList = document.getElementById('cart-list');
 
@@ -114,39 +107,27 @@ function renderSubmittedOrders(){
     
 }
 
+function addPricesFrom(selector){ //這是為了簡化下面的updateTotal所生的
+    document.querySelectorAll(selector).forEach(li=>{ 
+        //找id=cart-list的區塊中class=order的元素底下的清單項目，所以會抓到每一種商品的訂單，全部歷遍並放進變數li
+        const priceNode = li.querySelector('span:last-child');//從這個變數li中找出最後一個span的元素（就會是price)
+        if(priceNode){
+            totalPrice += parseFloat(priceNode.textContent.replace('$','')) || 0;
+            //如果priceNode(即價格)存在，就去掉$並轉成數字加到totalPrice裡
+        }
+    });
+}
+
 function updateTotal(){
     let totalPrice = 0;
    
     //已送出訂單
-    document.querySelectorAll('#cart-list .order li').forEach(li=>{
-        const priceNode = li.querySelector('span:last-child');
-        if(priceNode){
-            totalPrice += parseFloat(priceNode.textContent.replace('$','')) || 0;
-        }
-    });
+    addPricesFrom('#cart-list .order li');//這兩個中間計算過程相同，直接用addPricesFrom取代
 
     //Preview
-    document.querySelectorAll('#cart-preview li').forEach(li =>{
-        const priceNode = li.querySelector('span:last-child');
-        if(priceNode){
-            totalPrice += parseFloat(priceNode.textContent.replace('$','')) || 0;
-        }
-    });
+    addPricesFrom('#cart-preview li');
 
-    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
-
-    /*orderDivs.forEach(order=>{
-        order.querySelectorAll('li').forEach(li =>{
-            const priceText = li.querySelector('span:last-child').textContent;
-            totalPrice += parseFloat(priceText.replace('$','')) || 0;
-        })
-    })
-
-    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);*/
-    //localStorage.setItem("cart", JSON.stringify(cart));
-    //let totalPrice = cart.reduce((sum,item) => sum+ item.price*item.quantity, 0);
-    //reduce是js陣列的一個內建函數，用來將陣列歸納成單一數值，0則是totalPrice的預設值
-    //document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);//最後記得把totalPrice印出來
 }
 
 document.getElementById('submit-button').addEventListener('click', ()=>{
@@ -155,9 +136,9 @@ document.getElementById('submit-button').addEventListener('click', ()=>{
     //讀取已送出訂單
     let orders = JSON.parse(localStorage.getItem('orders')) || [];
     
-    if (orders.length > 0){
-        let lastOrder = orders[orders.length -1];
-        
+    if (orders.length > 0){ //如果已經有訂單
+        let lastOrder = orders[orders.length -1];//lastOrder其實就是正在進行的那筆
+
         cart.forEach(item => {
             let existing = lastOrder.find(o => o.name === item.name);
             if (existing){
@@ -169,7 +150,7 @@ document.getElementById('submit-button').addEventListener('click', ()=>{
         });
         orders[orders.length - 1] = lastOrder;
     }
-    else{
+    else{//如果是第一次點
         orders.push(cart);
     }
     localStorage.setItem('orders', JSON.stringify(orders));
@@ -204,3 +185,18 @@ window.onload = ()=>{
     updateTotal();
     //先選染已送出訂單，再渲染preview，total的計算會比較保險
 }
+
+/*function submitOrders(order){
+    //下面那串即為後端API
+    fetch('https://script.google.com/macros/s/AKfycbzW7jsoH2k3IBpCLC57khAraPSEoFjVVdoIotZ-xjWnTgr3XWlu8ecp74LIhroeeRDCSA/exec" ,{
+        method: 'POST',
+        body: JSON.stringify(order)
+    })
+        
+        
+        
+
+    .then    
+    
+    
+}*/
