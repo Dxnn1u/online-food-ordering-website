@@ -2,10 +2,10 @@
 One of my dreams is to open a pub. As both practice and a step toward that goal, I am developing a test-version web application for the pub I hope to run in the future. Since I am less experienced with backend development, this system currently focuses mainly on the frontend.
 
 ## Table of Contents
--[Reference Websites](#reference-website)
--[Structure](#structure)
--[Features](#features)
--[Design Approach](#design-approach)
+- [Reference Websites](#reference-website)
+- [Structure](#structure)
+- [Features](#features)
+- [Design Approach](#design-approach)
 
 ## Reference Websites: 
 ### Balenciaga
