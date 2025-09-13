@@ -107,30 +107,32 @@ function renderSubmittedOrders(){ /*這邊跟上面的renderCart類似，主要�
     
 }
 
-function addPricesFrom(selector){ //這是為了簡化下面的updateTotal所生的
+function addPricesFrom(selector, currentTotal){ //這是為了簡化下面的updateTotal所生的
+    let total = currentTotal;
     document.querySelectorAll(selector).forEach(li=>{ 
         //找id=cart-list的區塊中class=order的元素底下的清單項目，所以會抓到每一種商品的訂單，全部歷遍並放進變數li
         const priceNode = li.querySelector('span:last-child');//從這個變數li中找出最後一個span的元素（就會是price)
         if(priceNode){
-            totalPrice += parseFloat(priceNode.textContent.replace('$','')) || 0;
+            total += parseFloat(priceNode.textContent.replace('$','')) || 0;
             //如果priceNode(即價格)存在，就去掉$並轉成數字加到totalPrice裡
         }
     });
+    return total;
 }
 
 function updateTotal(){
     let totalPrice = 0;
    
     //已送出訂單
-    addPricesFrom('#cart-list .order li');//這兩個中間計算過程相同，直接用addPricesFrom取代
+    totalPrice = addPricesFrom('#cart-list .order li', totalPrice);//這兩個中間計算過程相同，直接用addPricesFrom取代
 
     //Preview
-    addPricesFrom('#cart-preview li');
+    totalPrice = addPricesFrom('#cart-preview li',totalPrice);
 
     document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);//最後記得把totalPrice印出來
 }
 
-document.getElementById('submit-button').addEventListener('click', ()=>{
+document.getElementById('submit-button').addEventListener('click',async ()=>{
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     //讀取已送出訂單
@@ -155,17 +157,31 @@ document.getElementById('submit-button').addEventListener('click', ()=>{
     }
     localStorage.setItem('orders', JSON.stringify(orders));
 
-    //清空 preview cart
-    localStorage.setItem('cart', JSON.stringify([]));
+    //送到Flask
+    try{ //下面那串即為後端API
+        let response = await fetch("http://127.0.0.1:5000/submit-order",{
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},//後端的python檔設定好了
+            body: JSON.stringify(cart)
+        });
 
-    //重新渲染
-    renderSubmittedOrders();
-    renderCart();
-    updateTotal();
+        let result = await response.json();
+        console.log(result.message); //把後端的回傳值印在console上
+        
+        //清空 preview cart
+        localStorage.setItem('cart', JSON.stringify([]));
 
-    alert('Your Cart has been Submited') ; 
-    window.location.href = 'homepage.html';
+        window.location.href = 'homepage.html';
+        
+        /*alert('Your Cart has been Submited') ; 
+        alert本身會阻塞JS的執行流程，特別是搭配非同步的fetch，所以會導致無法順暢跳頁*/
+        }
+    catch(err){
+        console.error("送訂單失敗", err);
+    }
+
 });
+    
 
 document.getElementById('clear-all-button').addEventListener('click', ()=>{
     //清空購物車
@@ -185,18 +201,3 @@ window.onload = ()=>{
     updateTotal();
     //先選染已送出訂單，再渲染preview，total的計算會比較保險
 }
-
-/*function submitOrders(order){
-    //下面那串即為後端API
-    fetch('https://script.google.com/macros/s/AKfycbzW7jsoH2k3IBpCLC57khAraPSEoFjVVdoIotZ-xjWnTgr3XWlu8ecp74LIhroeeRDCSA/exec" ,{
-        method: 'POST',
-        body: JSON.stringify(order)
-    })
-        
-        
-        
-
-    .then    
-    
-    
-}*/
