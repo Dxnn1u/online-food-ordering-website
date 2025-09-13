@@ -1,5 +1,5 @@
 # Online Food Ordering Website Development
-One of my dreams is to open a pub. As both practice and a step toward that goal, I am developing a test-version web application for the pub I hope to run in the future. Since I am less experienced with backend development, this system currently focuses mainly on the frontend.
+One of my dreams is to open a pub. As both practice and a step toward that goal, I am developing a test-version web application for the pub I hope to run in the future. Although the original focus was on frontend web design, I later decided to add a simple backend for completeness, allowing order data to be saved in an local Excel file.
 
 ## Table of Contents
 - [Reference Websites](#reference-website)
@@ -69,6 +69,8 @@ This feature, while not strictly essential, is commonly found in many online ord
 ### Local Storage
 Since customers frequently switch between pages while using this site, the `localStorage` API is used to temporarily store data in JSON format before navigation. When the user moves to a new page, the necessary data is retrieved from `localStorage` and converted back into a usable format.
 
+### Simple Backend
+Since I am more familiar with Python, I wrote a simple backend later on using Pandas and Flask, which allows order names, quantities, and total prices to be saved to an Excel file for easy record-keeping.
 
 ## Design Approach
 ### Images and Descriptions
